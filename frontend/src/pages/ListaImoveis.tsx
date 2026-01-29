@@ -8,20 +8,14 @@ const ListaImoveis: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [filtros, setFiltros] = useState({
     tipo: '',
-    preco_min: '',
-    preco_max: '',
-    quartos: '',
-    banheiros: '',
+    bairro: '',
   });
 
   const carregarImoveis = useCallback(async () => {
     try {
       const params: Record<string, string | number> = {};
       if (filtros.tipo) params.tipo = filtros.tipo;
-      if (filtros.preco_min) params.preco_min = filtros.preco_min;
-      if (filtros.preco_max) params.preco_max = filtros.preco_max;
-      if (filtros.quartos) params.quartos = filtros.quartos;
-      if (filtros.banheiros) params.banheiros = filtros.banheiros;
+      if (filtros.bairro) params.bairro = filtros.bairro;
 
       const response = await imovelService.listar(params);
       setImoveis(response.results);
@@ -57,68 +51,38 @@ const ListaImoveis: React.FC = () => {
         <div className="filtros">
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="tipo">Tipo</label>
+              <label htmlFor="tipo">Tipo de Imóvel</label>
               <select
                 id="tipo"
                 name="tipo"
                 value={filtros.tipo}
                 onChange={handleFiltroChange}
               >
-                <option value="">Todos</option>
-                <option value="CASA">Casa</option>
-                <option value="APARTAMENTO">Apartamento</option>
-                <option value="KITNET">Kitnet</option>
-                <option value="COMERCIAL">Comercial</option>
-                <option value="TERRENO">Terreno</option>
+                <option value="">Todos os tipos</option>
+                <option value="casa">Casa</option>
+                <option value="apartamento">Apartamento</option>
+                <option value="kitnet">Kitnet</option>
+                <option value="quarto">Quarto</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label htmlFor="preco_min">Preço Mínimo</label>
-              <input
-                type="number"
-                id="preco_min"
-                name="preco_min"
-                value={filtros.preco_min}
+              <label htmlFor="bairro">Bairro</label>
+              <select
+                id="bairro"
+                name="bairro"
+                value={filtros.bairro}
                 onChange={handleFiltroChange}
-                placeholder="R$ 0"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="preco_max">Preço Máximo</label>
-              <input
-                type="number"
-                id="preco_max"
-                name="preco_max"
-                value={filtros.preco_max}
-                onChange={handleFiltroChange}
-                placeholder="R$ 10000"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="quartos">Quartos</label>
-              <input
-                type="number"
-                id="quartos"
-                name="quartos"
-                value={filtros.quartos}
-                onChange={handleFiltroChange}
-                min="0"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="banheiros">Banheiros</label>
-              <input
-                type="number"
-                id="banheiros"
-                name="banheiros"
-                value={filtros.banheiros}
-                onChange={handleFiltroChange}
-                min="0"
-              />
+              >
+                <option value="">Todos os bairros</option>
+                <option value="centro">Centro</option>
+                <option value="nova_corrente">Nova Corrente</option>
+                <option value="aeroporto_i">Aeroporto I</option>
+                <option value="aeroporto_ii">Aeroporto II</option>
+                <option value="vermelhao">Vermelhão</option>
+                <option value="sincerino">Sincerino</option>
+                <option value="vila_nova">Vila Nova</option>
+              </select>
             </div>
           </div>
         </div>
@@ -127,20 +91,11 @@ const ListaImoveis: React.FC = () => {
           {imoveis.length > 0 ? (
             imoveis.map((imovel) => (
               <div key={imovel.id} className="card">
-                <img
-                  src={`http://127.0.0.1:8000${imovel.foto_principal}`}
-                  alt={imovel.titulo}
-                />
                 <div className="card-content">
-                  <div className="card-badge">{imovel.tipo}</div>
+                  <div className="card-badge">{imovel.tipo_display}</div>
                   <h3>{imovel.titulo}</h3>
-                  <p className="location">{imovel.endereco}</p>
-                  <p className="price">R$ {imovel.preco}/mês</p>
-                  <div className="card-details">
-                    <span>🛏️ {imovel.quartos}</span>
-                    <span>🚿 {imovel.banheiros}</span>
-                    <span>📏 {imovel.area_m2}m²</span>
-                  </div>
+                  <p className="location">{imovel.bairro_display}</p>
+                  <p className="price">R$ {Number(imovel.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}/mês</p>
                   <Link to={`/imoveis/${imovel.id}`} className="btn btn-primary">
                     Ver Detalhes
                   </Link>

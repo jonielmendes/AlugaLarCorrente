@@ -74,6 +74,59 @@ const Register: React.FC = () => {
           
           {error && <div className="alert alert-error">{error}</div>}
           
+          <div style={{ 
+            display: 'flex', 
+            gap: '1rem', 
+            marginBottom: '2rem',
+            justifyContent: 'center'
+          }}>
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, tipo_perfil: 'LOCATARIO' })}
+              style={{
+                flex: 1,
+                padding: '2rem 1rem',
+                border: formData.tipo_perfil === 'LOCATARIO' ? '3px solid #3182ce' : '2px solid #ccc',
+                borderRadius: '8px',
+                background: formData.tipo_perfil === 'LOCATARIO' ? '#e6f2ff' : 'white',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '0.5rem',
+                transition: 'all 0.3s ease',
+                boxShadow: formData.tipo_perfil === 'LOCATARIO' ? '0 4px 12px rgba(49, 130, 206, 0.2)' : 'none'
+              }}
+            >
+              <span style={{ fontSize: '3rem' }}>🏠</span>
+              <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Locatário</span>
+              <span style={{ fontSize: '0.9rem', color: '#666' }}>Quero alugar</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, tipo_perfil: 'LOCADOR' })}
+              style={{
+                flex: 1,
+                padding: '2rem 1rem',
+                border: formData.tipo_perfil === 'LOCADOR' ? '3px solid #3182ce' : '2px solid #ccc',
+                borderRadius: '8px',
+                background: formData.tipo_perfil === 'LOCADOR' ? '#e6f2ff' : 'white',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '0.5rem',
+                transition: 'all 0.3s ease',
+                boxShadow: formData.tipo_perfil === 'LOCADOR' ? '0 4px 12px rgba(49, 130, 206, 0.2)' : 'none'
+              }}
+            >
+              <span style={{ fontSize: '3rem' }}>🔑</span>
+              <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Locador</span>
+              <span style={{ fontSize: '0.9rem', color: '#666' }}>Tenho imóveis</span>
+            </button>
+          </div>
+          
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group">
@@ -139,33 +192,17 @@ const Register: React.FC = () => {
               </div>
             </div>
 
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="tipo_perfil">Tipo de Perfil</label>
-                <select
-                  id="tipo_perfil"
-                  name="tipo_perfil"
-                  value={formData.tipo_perfil}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="LOCATARIO">Locatário (quero alugar)</option>
-                  <option value="LOCADOR">Locador (tenho imóveis)</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="telefone">Telefone</label>
-                <input
-                  type="tel"
-                  id="telefone"
-                  name="telefone"
-                  value={formData.telefone}
-                  onChange={handleChange}
-                  placeholder="(99) 99999-9999"
-                  required
-                />
-              </div>
+            <div className="form-group">
+              <label htmlFor="telefone">Telefone</label>
+              <input
+                type="tel"
+                id="telefone"
+                name="telefone"
+                value={formData.telefone}
+                onChange={handleChange}
+                placeholder="(99) 99999-9999"
+                required
+              />
             </div>
 
             <div className="form-group">

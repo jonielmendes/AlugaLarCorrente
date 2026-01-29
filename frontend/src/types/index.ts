@@ -26,20 +26,17 @@ export interface Imovel {
   titulo: string;
   descricao: string;
   preco: number;
-  endereco: string;
-  quartos: number;
-  banheiros: number;
-  area_m2: number;
+  bairro: string;
+  bairro_display: string;
   tipo: string;
-  mobiliado: boolean;
-  aceita_pet: boolean;
-  garagem: boolean;
+  tipo_display: string;
+  telefone_contato: string;
   foto_principal: string;
   ativo: boolean;
   visualizacoes: number;
   criado_em: string;
   atualizado_em: string;
-  proprietario: User;
+  dono: User;
   imagens?: ImagemImovel[];
   whatsapp_link: string;
 }
@@ -48,16 +45,16 @@ export interface ImovelListItem {
   id: number;
   titulo: string;
   preco: number;
-  endereco: string;
-  quartos: number;
-  banheiros: number;
-  area_m2: number;
+  bairro: string;
+  bairro_display: string;
   tipo: string;
+  tipo_display: string;
   foto_principal: string;
   ativo: boolean;
   visualizacoes: number;
   criado_em: string;
   whatsapp_link: string;
+  dono_nome: string;
 }
 
 export interface ImovelFormData {

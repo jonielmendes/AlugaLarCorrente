@@ -73,7 +73,7 @@ const Home: React.FC = () => {
                   <div className="card-price">
                     <span className="currency">R$</span>
                     {/* Formata o preço para o padrão brasileiro */}
-                    <span className="value">{parseFloat(imovel.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                    <span className="value">{Number(imovel.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                     <span className="period">/mês</span>
                   </div>
 

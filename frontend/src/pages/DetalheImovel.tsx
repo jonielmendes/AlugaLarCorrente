@@ -11,8 +11,10 @@ const DetalheImovel: React.FC = () => {
 
   const carregarImovel = useCallback(async () => {
     if (!id) return;
+    console.log('Carregando imóvel com ID:', id);
     try {
       const data = await imovelService.buscarPorId(Number(id));
+      console.log('Imóvel carregado:', data);
       setImovel(data);
     } catch (error) {
       console.error('Erro ao carregar imóvel:', error);
@@ -42,38 +44,13 @@ const DetalheImovel: React.FC = () => {
         </button>
 
         <div className="imovel-detalhe">
-          <div className="imovel-imagens">
-            <img
-              src={`http://127.0.0.1:8000${imovel.foto_principal}`}
-              alt={imovel.titulo}
-              className="imagem-principal"
-            />
-            {imovel.imagens && imovel.imagens.length > 0 && (
-              <div className="galeria">
-                {imovel.imagens.map((img) => (
-                  <img
-                    key={img.id}
-                    src={`http://127.0.0.1:8000${img.imagem}`}
-                    alt={`Imagem ${img.id}`}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="imovel-info">
-            <div className="card-badge">{imovel.tipo}</div>
+          <div className="imovel-info" style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <div className="card-badge">{imovel.tipo_display}</div>
             <h1>{imovel.titulo}</h1>
-            <p className="location">📍 {imovel.endereco}</p>
+            <p className="location">📍 {imovel.bairro_display}</p>
             <p className="price" style={{ fontSize: '2rem', color: '#2563eb', marginBottom: '1rem' }}>
-              R$ {imovel.preco}/mês
+              R$ {Number(imovel.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}/mês
             </p>
-
-            <div className="card-details" style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-              <span>🛏️ {imovel.quartos} quartos</span>
-              <span>🚿 {imovel.banheiros} banheiros</span>
-              <span>📏 {imovel.area_m2}m²</span>
-            </div>
 
             <div style={{ marginBottom: '1.5rem' }}>
               <h3>Descrição</h3>
@@ -81,22 +58,16 @@ const DetalheImovel: React.FC = () => {
             </div>
 
             <div style={{ marginBottom: '1.5rem' }}>
-              <h3>Características</h3>
-              <ul>
-                {imovel.mobiliado && <li>✓ Mobiliado</li>}
-                {imovel.aceita_pet && <li>✓ Aceita Pet</li>}
-                {imovel.garagem && <li>✓ Garagem</li>}
-              </ul>
-            </div>
-
-            <div style={{ marginBottom: '1.5rem' }}>
               <h3>Proprietário</h3>
-              <p><strong>{imovel.proprietario.first_name} {imovel.proprietario.last_name}</strong></p>
-              {imovel.proprietario.perfil && (
+              <p><strong>{imovel.dono.first_name} {imovel.dono.last_name}</strong></p>
+              {imovel.dono.perfil && (
                 <>
-                  <p>📞 {imovel.proprietario.perfil.telefone}</p>
-                  <p>✉️ {imovel.proprietario.email}</p>
+                  <p>📞 {imovel.dono.perfil.telefone}</p>
+                  <p>✉️ {imovel.dono.email}</p>
                 </>
+              )}
+              {imovel.telefone_contato && (
+                <p>📱 {imovel.telefone_contato}</p>
               )}
             </div>
 

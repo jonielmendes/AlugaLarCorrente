@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import logo from '../assets/logo.png';
 
 const Navbar: React.FC = () => {
   const { user, isAuthenticated, isLocador, logout } = useAuth();
@@ -14,7 +15,7 @@ const Navbar: React.FC = () => {
     <nav className="navbar">
       <div className="container navbar-content">
         <Link to="/" className="navbar-brand">
-          🏠 AlugaLar Corrente
+          <img src={logo} alt="AlugaLar" style={{ height: '40px' }} />
         </Link>
         <ul className="navbar-nav">
           <li>
@@ -31,7 +32,7 @@ const Navbar: React.FC = () => {
                 </li>
               )}
               <li>
-                <span>Olá, {user?.username}!</span>
+                <span>Olá, {user?.first_name || user?.username}!</span>
               </li>
               <li>
                 <button onClick={handleLogout}>Sair</button>
@@ -41,9 +42,6 @@ const Navbar: React.FC = () => {
             <>
               <li>
                 <Link to="/login">Entrar</Link>
-              </li>
-              <li>
-                <Link to="/register">Cadastrar</Link>
               </li>
             </>
           )}
